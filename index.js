@@ -17,12 +17,18 @@ app.post('/send-notification', async (req, res) => {
         const { token, title, body, data } = req.body;
 
         const message = {
+            token: token,
             notification: {
                 title: title,
                 body: body
             },
             data: data,
-            token: token
+            android: {
+                notification: {
+                    clickAction: 'OPEN_CHAT_ROOM',
+                    channelId: 'chat_notifications'
+                }
+            }
         };
 
         const response = await admin.messaging().send(message);
